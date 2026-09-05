@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>InstaForge Image Downloader</title>
+  <link rel="stylesheet" href="popup.css">
+</head>
+<body>
+  <div class="app-container">
+    <!-- Header -->
+    <header class="header">
+      <div class="brand">
+        <div class="logo-badge">⚡</div>
+        <div>
+          <h1 class="title">InstaForge Downloader</h1>
+          <p class="subtitle">Universal Image & CDN Bulk Extractor</p>
+        </div>
+      </div>
+      <div class="theme-badge">v1.0</div>
+    </header>
+
+    <!-- Navigation Tabs -->
+    <nav class="tabs">
+      <button class="tab-btn active" id="tab-scan">🔍 Scan Halaman Aktif</button>
+      <button class="tab-btn" id="tab-urls">📋 Input URL / Range</button>
+    </nav>
+
+    <!-- Tab 1: Scan Current Page -->
+    <section class="tab-pane active" id="pane-scan">
+      <div class="action-card">
+        <div class="scan-controls">
+          <button class="btn btn-primary" id="btn-scan-page">
+            <span class="icon">🔄</span> Scan Ulang Halaman
+          </button>
+          <span class="stats-text" id="scan-status">Memindai gambar di tab aktif...</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- Tab 2: Custom URLs / Range Pattern -->
+    <section class="tab-pane" id="pane-urls">
+      <div class="action-card">
+        <label for="url-input" class="field-label">Tempel Daftar URL Gambar atau Pola Range:</label>
+        <textarea id="url-input" class="textarea-input" placeholder="Contoh per baris:
+https://autofeeds.id/landing/ads-1x1/ig-01.jpg
+https://autofeeds.id/landing/ads-1x1/ig-02.jpg
+https://autofeeds.id/landing/ads-1x1/ig-03.jpg
+
+Atau pola nomor:
+https://autofeeds.id/landing/ads-1x1/ig-[01-10].jpg"></textarea>
+        
+        <div class="url-actions">
+          <button class="btn btn-secondary" id="btn-load-sample">Contoh URL</button>
+          <button class="btn btn-primary" id="btn-parse-urls">
+            <span class="icon">✨</span> Ambil Gambar dari URL
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- Filter & Options Bar -->
+    <section class="filters-bar">
+      <div class="filter-group">
+        <span class="filter-label">Filter:</span>
+        <select id="filter-format" class="select-input">
+          <option value="all">Semua Format</option>
+          <option value="jpg">JPG / JPEG</option>
+          <option value="png">PNG</option>
+          <option value="webp">WEBP</option>
+          <option value="svg">SVG</option>
+          <option value="gif">GIF</option>
+        </select>
+
+        <select id="filter-size" class="select-input">
+          <option value="0">Semua Ukuran</option>
+          <option value="150">Min 150px (Tanpa Icon)</option>
+          <option value="400">Min 400px (Sedang)</option>
+          <option value="800">Min 800px (HD Only)</option>
+        </select>
+      </div>
+
+      <div class="selection-actions">
+        <button class="btn-text" id="btn-select-all">Pilih Semua</button>
+        <span class="divider">|</span>
+        <button class="btn-text" id="btn-deselect-all">Batal Pilih</button>
+      </div>
+    </section>
+
+    <!-- Status & Progress Bar -->
+    <div class="progress-container hidden" id="progress-container">
+      <div class="progress-header">
+        <span id="progress-label">Mengunduh & Memproses ZIP...</span>
+        <span id="progress-percent">0%</span>
+      </div>
+      <div class="progress-bar-bg">
+        <div class="progress-bar-fill" id="progress-bar-fill"></div>
+      </div>
+    </div>
+
+    <!-- Image Count Bar -->
+    <div class="count-bar">
+      <span>Terpilih: <strong id="selected-count">0</strong> dari <strong id="total-count">0</strong> gambar</span>
+      <input type="text" id="filter-search" class="search-input" placeholder="Cari nama file / URL...">
+    </div>
+
+    <!-- Image Grid Gallery -->
+    <main class="gallery-container">
+      <div class="image-grid" id="image-grid">
+        <!-- Rendered dynamically -->
+      </div>
+      <div class="empty-state hidden" id="empty-state">
+        <p class="empty-icon">🖼️</p>
+        <p class="empty-title">Tidak ada gambar ditemukan</p>
+        <p class="empty-sub">Coba scan halaman lain atau masukkan daftar URL.</p>
+      </div>
+    </main>
+
+    <!-- Bottom Download Bar -->
+    <footer class="footer-bar">
+      <div class="zip-name-wrap">
+        <label for="zip-filename" class="sr-only">Nama File ZIP</label>
+        <input type="text" id="zip-filename" class="filename-input" value="instaforge_images.zip" placeholder="nama_file.zip">
+      </div>
+      
+      <div class="footer-buttons">
+        <button class="btn btn-success" id="btn-download-zip">
+          <span class="icon">📦</span> DOWNLOAD (.ZIP)
+        </button>
+      </div>
+    </footer>
+  </div>
+
+  <!-- Scripts -->
+  <script src="libs/jszip.min.js"></script>
+  <script src="popup.js"></script>
+</body>
+</html>
